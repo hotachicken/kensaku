@@ -1,5 +1,6 @@
 from PIL import Image, ImageGrab
 import pytesseract as ptess
+import pyperclip
 import sys
 
 """
@@ -23,5 +24,6 @@ if __name__ == "__main__":
     img, isimage = get_from_clip()
     if isimage:
         out = ptess.image_to_string(Image.open('clip.png'), lang='jpn', config='--psm 6')
+        pyperclip.copy(out)
         out = out.encode('utf8')
         sys.stdout.buffer.write(out)
