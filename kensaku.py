@@ -6,10 +6,14 @@ import sys
 Gets contents of clipboard. If an image, get as an image.
 For now, just assume an image
 """
+def blow_up_image(img, factor=2):
+    return img.resize((img.size[0] * factor, img.size[1] * factor))
+
 def get_from_clip():
     img = ImageGrab.grabclipboard()
     if isinstance(img, Image.Image):
-        img.save('temp.png')
+        img = blow_up_image(img)
+        img.save('clip.png')
     else:
         print("no image found", flush=True)
     isimage = True
@@ -18,6 +22,6 @@ def get_from_clip():
 if __name__ == "__main__":
     img, isimage = get_from_clip()
     if isimage:
-        out = ptess.image_to_string(Image.open('temp.png'), lang='jpn', config='--psm 6')
+        out = ptess.image_to_string(Image.open('clip.png'), lang='jpn', config='--psm 6')
         out = out.encode('utf8')
         sys.stdout.buffer.write(out)
