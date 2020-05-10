@@ -14,7 +14,6 @@ def get_from_clip():
     img = ImageGrab.grabclipboard()
     if isinstance(img, Image.Image):
         img = blow_up_image(img)
-        img.save('clip.png')
     else:
         print("no image found", flush=True)
     isimage = True
@@ -23,7 +22,7 @@ def get_from_clip():
 if __name__ == "__main__":
     img, isimage = get_from_clip()
     if isimage:
-        out = ptess.image_to_string(Image.open('clip.png'), lang='jpn', config='--psm 6')
+        out = ptess.image_to_string(img, lang='jpn', config='--psm 6')
         pyperclip.copy(out)
         out = out.encode('utf8')
         sys.stdout.buffer.write(out)
