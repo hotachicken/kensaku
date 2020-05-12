@@ -21,9 +21,11 @@ def get_from_clip():
     return img, isimage
 
 if __name__ == "__main__":
+    vert = len(sys.argv) > 1 # hacky, change later
+    isvert = 'jpn-vert' if vert else 'jpn'
     img, isimage = get_from_clip()
     if isimage:
-        out = ptess.image_to_string(img, lang='jpn', config='--psm 6')
+        out = ptess.image_to_string(img, lang=isvert, config='--psm 6')
         out = re.sub('\\s', '', out)
         pyperclip.copy(out)
         out = out.encode('utf8')
